@@ -1,0 +1,149 @@
+body {
+  margin: auto;
+  max-width: 1000px;
+  padding: 15px;
+  min-height: 100vh;
+  background-position: center;
+  background: linear-gradient(
+      120deg,
+      rgba(105, 194, 199, 0.5),
+      rgba(141, 203, 193, 0.9)
+    ),
+    url("./img/picture.jpeg");
+}
+
+.inputTitle {
+  font-size: 30px;
+  color: white;
+}
+button {
+  margin-left: 5px;
+  border-radius: 5px;
+  border-style: none;
+  color: cadetblue;
+}
+button:hover {
+  background-color: rgb(94, 154, 174);
+  color: white;
+  cursor: pointer;
+}
+
+.inputTodo button,
+.inputTodo input {
+  height: 40px;
+  margin-top: 10px;
+}
+
+.inputTodo input {
+  min-width: 400px;
+  font-size: 20px;
+  padding: 0;
+  outline: none;
+  border-radius: 3px;
+  border-style: none;
+}
+
+.inputTodo,
+.todoList,
+.completedList {
+  border-radius: 15px;
+}
+
+.inputTodo {
+  margin-top: 150px;
+  background-color: darkseagreen;
+  text-align: center;
+  height: 60px;
+}
+
+.todoListTitle,
+.completedListTitle {
+  font-size: 25px;
+  text-align: center;
+  margin: 15px 0 0 0;
+  padding: 5px 0;
+  color: white;
+}
+.todoList {
+  background-color: rgb(100, 184, 186);
+  min-height: 300px;
+}
+
+.completedList {
+  background-color: lightblue;
+  min-height: 300px;
+}
+
+.completedLists p {
+  display: inline;
+  color: white;
+  text-decoration: line-through;
+  margin-left: 15px;
+}
+
+th {
+  min-width: 40px;
+}
+
+tr td:nth-child(4) {
+  min-width: 200px;
+}
+
+tr label,
+tr input {
+  cursor: pointer;
+}
+
+tr td:last-child {
+  padding-left: 5px;
+}
+
+#detail {
+  position: absolute;
+  top: 200px;
+  right: 0;
+  left: 0;
+  margin: 0 auto;
+  max-width: 500px;
+  height: 350px;
+  border-radius: 15px;
+  background-color: rgba(207, 230, 125, 0.898);
+}
+
+.detailTitle {
+  padding: 10px 0 0 10px;
+  margin-top: 0;
+}
+
+.modalDetailTable td {
+  height: 50px;
+}
+
+.modalDetailTable td:nth-child(1) {
+  width: 100px;
+  padding-left: 35px;
+}
+
+.detailClose button {
+  display: block;
+  margin: 0 15px 0 auto;
+  width: 100px;
+  height: 25px;
+}
+
+#appearDetail {
+  background: rgba(128, 128, 128, 0.6);
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+}
+
+#appearDetail.hiddenDetail {
+  display: none;
+}
+
+#detail.hiddenDetail {
+  transform: translate(0, -700px);
+}
