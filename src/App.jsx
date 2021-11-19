@@ -2,19 +2,15 @@ import React, {useState} from 'react';
 import './Style.css'
 import './img/picture.jpeg';
 
-// const inputTodo = () => {
-    
-// }
-
-
 
 
 
 
 const App =()=>{
     const [inputText, setInputText] = useState('')
-    const [todoList, setTodoList] = useState(['aaaa','bbbb','cccc']);
+    const [todoList, setTodoList] = useState([{id:1,name:'aaaa'},{id:2,name:'bbbb'}]);
     const [completedList, setCompletedList] = useState(['pppp','ssss']);
+    const [detail, setDetail] = useState();
 
     const onChangeInputText = (event) => setInputText(event.target.value)
     const onClickAdd = () => {
@@ -60,29 +56,12 @@ const App =()=>{
 
     }
 
-    const onClickDetail = (index) => {
-        const appearDetail= document.getElementById('appearDetail')
-        const detail= document.getElementById('detail')
-        const detailBtn= document.getElementById('detailBtn')
-
-        detailBtn.addEventListener('click', (index)=>{
-            appearDetail.classList.remove('hiddenDetail')
-            detail.classList.remove('hiddenDetail')
-            
-        })
-        
-        console.log(index)
+    const onClickDetail = (todo) => {
+        setDetail(todo)
     }
     
     const onClickClose = () => {
-        const appearDetail= document.getElementById('appearDetail')
-        const detail= document.getElementById('detail')
-        const closeBtn= document.getElementById('closeBtn')
-    
-        closeBtn.addEventListener('click', ()=>{
-            appearDetail.classList.add('hiddenDetail')
-            detail.classList.add('hiddenDetail')
-        })
+        setDetail(null)
     }
 
     return(
@@ -116,17 +95,17 @@ const App =()=>{
                 <tbody>
                     {todoList.map((todo, index) => {
                         return (
-                            <tr key={todo}>
+                            <tr key={todo.id}>
+                                <td>{todo.id}</td>
                                 <td></td>
-                                <td></td>
-                                <td><button></button></td>
+                                <td><button>In progress/Pending</button></td>
                                 <td>
-                                    <label><input type="checkbox" onClick={() => onClickCheck(index)}></input>{todo}</label>
+                                    <label><input type="checkbox" onClick={() => onClickCheck(index)}></input>{todo.name}</label>
                                 </td>
                                 <td>
                                     <button onClick={() => onClickEdit(index)}>edit</button>
                                     <button onClick={() => onClickDelete(index)}>delete</button>
-                                    <button onClick={() => onClickDetail(index)} id="detailBtn">Check the details</button>
+                                    <button onClick={() => onClickDetail(todo)} id="detailBtn">Check the details</button>
                                 </td>
                             </tr>
                         )
@@ -139,21 +118,29 @@ const App =()=>{
             <p className="completedListTitle">Completed Todo</p>
             {completedList.map((todo, index)=> {
                 return (
-                    <div key={todo} className="completedLists">
-                        <p>{todo}</p>
+                    <div key={todo.id} className="completedLists">
+                        <p>{todo.name}</p>
                         <button onClick={() => onClickBack(index)}>put back</button>
                     </div>
                 )
             })}
          </div>
 
-        
-        <div id="appearDetail" className="hiddenDetail"></div>
-            <div id="detail" className="hiddenDetail">
+
+        {
+        detail && 
+        (
+        <>
+        <div id="appearDetail"></div>
+            <div id="detail">
                 <h2 className="detailTitle">DETAIL</h2>
                 <div className="modalDetailTable">
                     <table>
                         <tbody>
+                                <tr>
+                                   <td>ID</td>
+                                   <td>{detail.id}</td>
+                                </tr>
                                 <tr>
                                    <td>LIMIT</td>
                                    <td></td>
@@ -164,7 +151,7 @@ const App =()=>{
                                 </tr>
                                 <tr>
                                    <td>TODO</td>
-                                   <td></td>
+                                   <td>{detail.name}</td>
                                 </tr>
                                 <tr>
                                    <td>MEMO</td>
@@ -177,6 +164,9 @@ const App =()=>{
                 <button onClick={onClickClose} id="closeBtn">CLOSE</button>
                 </div>
             </div>
+        </>
+        )
+        }       
         
 
          
