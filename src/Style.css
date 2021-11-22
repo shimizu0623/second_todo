@@ -28,13 +28,9 @@ button:hover {
   cursor: pointer;
 }
 
-.inputTodo button,
-.inputTodo input {
+.inputTodo button {
   height: 40px;
   margin-top: 10px;
-}
-
-.inputTodo input {
   min-width: 400px;
   font-size: 20px;
   padding: 0;
@@ -98,18 +94,20 @@ tr td:last-child {
   padding-left: 5px;
 }
 
-#detail {
+#detail,
+#create {
   position: absolute;
   top: 200px;
   right: 0;
   left: 0;
   margin: 0 auto;
   max-width: 500px;
-  height: 350px;
+  height: 450px;
   border-radius: 15px;
   background-color: rgba(207, 230, 125, 0.898);
 }
 
+.createTitle,
 .detailTitle {
   padding: 10px 0 0 10px;
   margin-top: 0;
@@ -119,14 +117,31 @@ tr td:last-child {
   height: 50px;
 }
 
-.modalDetailTable td:nth-child(1) {
+.modalCreate input,
+.modalCreate textarea {
+  cursor: pointer;
+  height: 30px;
+  min-width: 200px;
+  outline: none;
+  border-radius: 5px;
+  border-style: none;
+}
+
+.modalCreate textarea {
+  height: 100px;
+  min-width: 250px;
+}
+
+.modalDetailTable td:nth-child(1),
+.modalCreate {
   width: 100px;
   padding-left: 35px;
 }
 
-.detailClose button {
+.createBtn button,
+.detailBtn button {
   display: block;
-  margin: 0 15px 0 auto;
+  margin: 0 15px 10px auto;
   width: 100px;
   height: 25px;
 }

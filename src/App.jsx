@@ -7,26 +7,35 @@ import './img/picture.jpeg';
 
 
 const App =()=>{
-    const [inputText, setInputText] = useState('')
-    const [todoList, setTodoList] = useState([{id:1,name:'aaaa'},{id:2,name:'bbbb'}]);
-    const [completedList, setCompletedList] = useState(['pppp','ssss']);
+    const [inputText, setInputText] = useState()
+    const [inputTextarea, setInputTextarea] = useState()
+    const [todoList, setTodoList] = useState([{id:1,name:'aaaa'}]);
+    const [completedList, setCompletedList] = useState([{name:'pppp'},{name:'ssss'}]);
     const [detail, setDetail] = useState();
 
     const onChangeInputText = (event) => setInputText(event.target.value)
-    const onClickAdd = () => {
+
+    const onChangeInputTextarea = (event) => setInputTextarea(event.target.value)
+    
+    const onClickCreate = () => {
         if(inputText === '') return;
         const newTodos = [...todoList, inputText];
+        const countUpId = () => {
+            setTodoList(todoList.id + 1)
+        }
+
         setTodoList(newTodos);
         setInputText('');
+        countUpId(todoList)
     };
 
-    const onClickEdit = (index) => {
-        const textEdit = [...todoList]
-        textEdit.splice(index, 1)
+    const onClickEdit = () => {
+        // const textEdit = [...todoList]
+        // textEdit.splice(index, 1)
 
-        const inputText = [todoList[index]]
-        setTodoList(textEdit)
-        setInputText(inputText)
+        // const inputText = [todoList[index]]
+        // setTodoList(textEdit)
+        // setInputText(inputText)
     }
     
     const onClickDelete = (index) => {
@@ -56,12 +65,17 @@ const App =()=>{
 
     }
 
+    const onClickNewTodo = (todo) => {
+        setInputText(todo)
+    }
+
     const onClickDetail = (todo) => {
         setDetail(todo)
     }
     
     const onClickClose = () => {
         setDetail(null)
+        setInputText(null)
     }
 
     return(
@@ -71,13 +85,7 @@ const App =()=>{
          </div>
          
          <div className="inputTodo">
-            <input 
-                type="text"
-                placeholder="New task"
-                value={inputText}
-                onChange={onChangeInputText}
-            />
-            <button onClick={onClickAdd}>Add</button>
+             <button onClick={onClickNewTodo}>New Todo</button>
          </div>
 
          <div className="todoList">
@@ -103,7 +111,6 @@ const App =()=>{
                                     <label><input type="checkbox" onClick={() => onClickCheck(index)}></input>{todo.name}</label>
                                 </td>
                                 <td>
-                                    <button onClick={() => onClickEdit(index)}>edit</button>
                                     <button onClick={() => onClickDelete(index)}>delete</button>
                                     <button onClick={() => onClickDetail(todo)} id="detailBtn">Check the details</button>
                                 </td>
@@ -126,48 +133,81 @@ const App =()=>{
             })}
          </div>
 
-
         {
-        detail && 
-        (
-        <>
-        <div id="appearDetail"></div>
-            <div id="detail">
-                <h2 className="detailTitle">DETAIL</h2>
-                <div className="modalDetailTable">
-                    <table>
-                        <tbody>
-                                <tr>
-                                   <td>ID</td>
-                                   <td>{detail.id}</td>
-                                </tr>
-                                <tr>
-                                   <td>LIMIT</td>
-                                   <td></td>
-                                </tr>
-                                <tr>
-                                   <td>STATUS</td>
-                                   <td></td>
-                                </tr>
-                                <tr>
-                                   <td>TODO</td>
-                                   <td>{detail.name}</td>
-                                </tr>
-                                <tr>
-                                   <td>MEMO</td>
-                                   <td></td>
-                                </tr>
-                        </tbody>
-                    </table>
+            inputText &&
+            (
+            <>
+            <div id="appearDetail"></div>  {/* グレーの背景 */}
+            <div id="create">
+                <h2 className="createTitle">New Task</h2>
+                <div className="modalCreate">
+                    <div>
+                        <label for="date">Limit Date</label>
+                        <input type="date" />
+                    </div>
+                    <div>
+                        <label for="todo">Todo</label>
+                        <input type="text" onChange={onChangeInputText} placeholder="todoを入力" />
+                    </div>
+                    <div>
+                        <label for="memo">Memo</label>
+                        <textarea id="textbox" onChange={onChangeInputTextarea} placeholder="Write down the memo" />
+                        {/* maxlength='80' */}
+                    </div>
                 </div>
-                <div className="detailClose">
+                <div className="createBtn">
+                <button onClick={onClickCreate}>CREATE</button>
                 <button onClick={onClickClose} id="closeBtn">CLOSE</button>
                 </div>
             </div>
-        </>
-        )
+            </>
+            )
+        }
+
+
+
+        {
+            detail && 
+            (
+            <>
+            <div id="appearDetail"></div>  {/* グレーの背景 */}
+                <div id="detail">
+                    <h2 className="detailTitle">DETAIL</h2>
+                    <div className="modalDetailTable">
+                        <table>
+                            <tbody>
+                                    <tr>
+                                       <td>ID</td>
+                                       <td>{detail.id}</td>
+                                    </tr>
+                                    <tr>
+                                       <td>LIMIT</td>
+                                       <td></td>
+                                    </tr>
+                                    <tr>
+                                       <td>STATUS</td>
+                                       <td></td>
+                                    </tr>
+                                    <tr>
+                                       <td>TODO</td>
+                                       <td>{detail.name}</td>
+                                    </tr>
+                                    <tr>
+                                       <td>MEMO</td>
+                                       <td></td>
+                                    </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div className="detailBtn">
+                    <button onClick={onClickEdit}>EDIT</button>
+                    <button onClick={onClickClose} id="closeBtn">CLOSE</button>
+                    </div>
+                </div>
+            </>
+            )
         }       
-        
+
 
          
         </>
