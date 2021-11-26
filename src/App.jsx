@@ -7,29 +7,36 @@ import './img/picture.jpeg';
 
 
 const App =()=>{
-    const [inputText, setInputText] = useState()
-    const [inputTextarea, setInputTextarea] = useState()
-    const [todoList, setTodoList] = useState([{id:1,name:'aaaa'}]);
-    const [completedList, setCompletedList] = useState([{name:'pppp'},{name:'ssss'}]);
+    const [inputTodo, setInputTodo] = useState()
+    const [todoList, setTodoList] = useState([]);
+    const [completedList, setCompletedList] = useState([{name:'pppp'}]);
     const [detail, setDetail] = useState();
 
-    const onChangeInputText = (event) => setInputText(event.target.value)
+    const onChangeInputText = (event) => setInputTodo({...inputTodo, name: event.target.value})
 
-    const onChangeInputTextarea = (event) => setInputTextarea(event.target.value)
+    // const onChangeInputTextarea = (event) => setInputTextarea(event.target.value)
     
     const onClickCreate = () => {
-        if(inputText === '') return;
-        const newTodos = [...todoList, inputText];
-        const countUpId = () => {
-            setTodoList(todoList.id + 1)
+        if(!inputTodo.name) {
+            return;
         }
+                
+
+        const newTodos = [...todoList, inputTodo];
+        // const countUpId = () => {
+        //     setTodoList(todoList.id + 1)
+        // }
 
         setTodoList(newTodos);
-        setInputText('');
-        countUpId(todoList)
+        // countUpId(todoList)
+        setInputTodo(null)
+
+        
     };
 
-    const onClickEdit = () => {
+    const onClickEdit = (index) => {
+
+
         // const textEdit = [...todoList]
         // textEdit.splice(index, 1)
 
@@ -65,9 +72,35 @@ const App =()=>{
 
     }
 
-    const onClickNewTodo = (todo) => {
-        setInputText(todo)
-    }
+    const onChangeDate = (event) => setInputTodo({...inputTodo, date:event.target.value})
+
+    const onChangeInputTextarea = (event) => setInputTodo({...inputTodo, memo:event.target.value})
+ 
+    const onClickNewTodo = () => {
+        const id = () => {
+
+            }
+            
+            setInputTodo({id})
+        }
+        // {
+            //     // ↓一番大きい数字に１足していく処理を考える
+            //     // const id = () => setInputTodo({...inputTodo.id})
+            //     // const maxNumber = () => Math.max.apply(null,...inputTodo.id)
+            //     // const id = maxNumber()
+            //     // const maxNumber = () => {Math.max(...inputTodo.id)}
+            
+            //     // console.log(Math.max(id))
+            // setTodoList();
+        
+        
+        //     // setInputTodo(Math.max(...inputTodo.id + 1))
+        
+        //     const id = () => {
+    //         Math.max({...todoList.id}) + 1
+    //     }
+        // console.log({id})
+    // }
 
     const onClickDetail = (todo) => {
         setDetail(todo)
@@ -75,7 +108,7 @@ const App =()=>{
     
     const onClickClose = () => {
         setDetail(null)
-        setInputText(null)
+        setInputTodo(null)
     }
 
     return(
@@ -89,7 +122,7 @@ const App =()=>{
          </div>
 
          <div className="todoList">
-            <p className="todoListTitle">Work In Progress</p>
+            <p className="todoListTitle">Todo</p>
             <table className="todoListsTable">
                 <thead>
                 <tr>
@@ -105,14 +138,14 @@ const App =()=>{
                         return (
                             <tr key={todo.id}>
                                 <td>{todo.id}</td>
-                                <td></td>
-                                <td><button>In progress/Pending</button></td>
+                                <td>{todo.date}</td>
+                                <td><button>Todo/In progress/Done</button></td>
                                 <td>
                                     <label><input type="checkbox" onClick={() => onClickCheck(index)}></input>{todo.name}</label>
                                 </td>
                                 <td>
                                     <button onClick={() => onClickDelete(index)}>delete</button>
-                                    <button onClick={() => onClickDetail(todo)} id="detailBtn">Check the details</button>
+                                    <button onClick={() => onClickDetail(todo)}>Check the details</button>
                                 </td>
                             </tr>
                         )
@@ -134,24 +167,28 @@ const App =()=>{
          </div>
 
         {
-            inputText &&
+            inputTodo &&
             (
             <>
             <div id="appearDetail"></div>  {/* グレーの背景 */}
             <div id="create">
-                <h2 className="createTitle">New Task</h2>
+                {/* <h2 className="createTitle">New Task</h2> */}
                 <div className="modalCreate">
                     <div>
                         <label for="date">Limit Date</label>
-                        <input type="date" />
+                        <input type="date" value={inputTodo.date} onChange={onChangeDate}/>
                     </div>
                     <div>
                         <label for="todo">Todo</label>
-                        <input type="text" onChange={onChangeInputText} placeholder="todoを入力" />
+                        <input type="text" value={inputTodo.name} onChange={onChangeInputText} placeholder="todoを入力" />
                     </div>
                     <div>
                         <label for="memo">Memo</label>
-                        <textarea id="textbox" onChange={onChangeInputTextarea} placeholder="Write down the memo" />
+                        <textarea
+                         id="textbox"
+                         value={inputTodo.memo}
+                         onChange={onChangeInputTextarea}
+                         placeholder="Write down the memo" />
                         {/* maxlength='80' */}
                     </div>
                 </div>
@@ -182,7 +219,7 @@ const App =()=>{
                                     </tr>
                                     <tr>
                                        <td>LIMIT</td>
-                                       <td></td>
+                                       <td>{detail.date}</td>
                                     </tr>
                                     <tr>
                                        <td>STATUS</td>
@@ -194,13 +231,15 @@ const App =()=>{
                                     </tr>
                                     <tr>
                                        <td>MEMO</td>
-                                       <td></td>
+                                       <td>{detail.memo}</td>
                                     </tr>
                             </tbody>
                         </table>
                     </div>
                     <div className="detailBtn">
-                    <button onClick={onClickEdit}>EDIT</button>
+                    <button 
+                    // onClick={() => onClickEdit(index)}
+                    >EDIT</button>
                     <button onClick={onClickClose} id="closeBtn">CLOSE</button>
                     </div>
                 </div>

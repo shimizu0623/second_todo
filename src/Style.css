@@ -135,6 +135,7 @@ tr td:last-child {
 .modalDetailTable td:nth-child(1),
 .modalCreate {
   width: 100px;
+  margin-top: 70px;
   padding-left: 35px;
 }
 
@@ -154,11 +155,11 @@ tr td:last-child {
   right: 0;
   left: 0;
 }
-
+/* 
 #appearDetail.hiddenDetail {
   display: none;
-}
+} */
 
-#detail.hiddenDetail {
+/* #detail.hiddenDetail {
   transform: translate(0, -700px);
-}
+} */
