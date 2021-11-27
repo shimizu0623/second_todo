@@ -1,4 +1,5 @@
 body {
+  user-select: none;
   margin: auto;
   max-width: 1000px;
   padding: 15px;
@@ -40,20 +41,20 @@ button:hover {
 }
 
 .inputTodo,
-.todoList,
-.completedList {
+.todoList {
   border-radius: 15px;
 }
 
 .inputTodo {
   margin-top: 150px;
-  background-color: darkseagreen;
+  /* background-color: darkseagreen; */
+  background-color: rgb(100, 184, 186);
   text-align: center;
   height: 60px;
 }
 
-.todoListTitle,
-.completedListTitle {
+/* .completedListTitle, */
+.todoListTitle {
   font-size: 25px;
   text-align: center;
   margin: 15px 0 0 0;
@@ -61,21 +62,23 @@ button:hover {
   color: white;
 }
 .todoList {
-  background-color: rgb(100, 184, 186);
-  min-height: 300px;
+  background-color: lightblue;
+  min-height: 400px;
 }
 
-.completedList {
+/* .completedList {
   background-color: lightblue;
   min-height: 300px;
-}
+  border-radius: 15px;
 
-.completedLists p {
+} */
+
+/* .completedLists p {
   display: inline;
   color: white;
   text-decoration: line-through;
   margin-left: 15px;
-}
+} */
 
 th {
   min-width: 40px;
@@ -85,17 +88,35 @@ tr td:nth-child(4) {
   min-width: 200px;
 }
 
-tr label,
-tr input {
-  cursor: pointer;
+tr p {
+  margin: 0 auto;
 }
 
 tr td:last-child {
   padding-left: 5px;
 }
 
+#todoStatusSelect {
+  cursor: pointer;
+  height: 30px;
+  margin-left: 10px;
+  border-radius: 3px;
+  outline: none;
+  border-style: none;
+}
+
+#todoStatus {
+  cursor: pointer;
+  border-radius: 3px;
+  outline: none;
+  border-style: none;
+  width: 90px;
+  margin: 0 5px;
+}
+
 #detail,
-#create {
+#create,
+#edit {
   position: absolute;
   top: 200px;
   right: 0;
@@ -118,7 +139,9 @@ tr td:last-child {
 }
 
 .modalCreate input,
-.modalCreate textarea {
+.modalCreate textarea,
+.modalEdit input,
+.modalEdit textarea {
   cursor: pointer;
   height: 30px;
   min-width: 200px;
@@ -127,20 +150,23 @@ tr td:last-child {
   border-style: none;
 }
 
-.modalCreate textarea {
+.modalCreate textarea,
+.modalEdit textarea {
   height: 100px;
   min-width: 250px;
 }
 
 .modalDetailTable td:nth-child(1),
-.modalCreate {
+.modalCreate,
+.modalEdit {
   width: 100px;
   margin-top: 70px;
   padding-left: 35px;
 }
 
 .createBtn button,
-.detailBtn button {
+.detailBtn button,
+.saveBtn button {
   display: block;
   margin: 0 15px 10px auto;
   width: 100px;
