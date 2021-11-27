@@ -19,14 +19,14 @@ const App =()=>{
         if(!inputTodo.name) {
             return;
         }
-                
+        
+        console.log(inputTodo)
         const newTodos = [...todoList, inputTodo];
         // const countUpId = () => {
         //     setTodoList(todoList.id + 1)
         // }
 
         setTodoList(newTodos);
-        console.log(newTodos)
         // countUpId(todoList)
         setInputTodo(null)
         
@@ -51,9 +51,16 @@ const App =()=>{
     const onChangeDate = (event) => setInputTodo({...inputTodo, date:event.target.value})
     
     const onChangeInputTextarea = (event) => setInputTodo({...inputTodo, memo:event.target.value})
+
+
+
+    const onChangeEditDate = (event) => setEdit({...inputTodo, date:event.target.value})
+    const onChangeEditTodo = (event) => setEdit({...inputTodo, name:event.target.value})
+    const onChangeEditInputTextarea = (event) => setEdit({...inputTodo, memo:event.target.value})
     
-    const onChangeEdit = (event) => setEdit({...inputTodo, memo:event.target.value})
-    
+
+
+
     const onClickNewTodo = () => {
         console.log(todoList)
         // ↓const ids = todoList.map((todo) => { 
@@ -262,18 +269,18 @@ const App =()=>{
                     <div className="modalEdit">
                         <div>
                             <label for="date">Limit Date</label>
-                            <input type="date" value={edit.date} onChange={onChangeDate}/>
+                            <input type="date" value={edit.date} onChange={onChangeEditDate}/>
                         </div>
                         <div>
                             <label for="todo">Todo</label>
-                            <input type="text" value={edit.name} onChange={onChangeEdit} placeholder="todoを入力" />
+                            <input type="text" value={edit.name} onChange={onChangeEditTodo} placeholder="todoを入力" />
                         </div>
                         <div>
                             <label for="memo">Memo</label>
                             <textarea
                              id="textbox"
                              value={edit.memo}
-                             onChange={onChangeInputTextarea}
+                             onChange={onChangeEditInputTextarea}
                              placeholder="Write down the memo" />
                         </div>
                     </div>
