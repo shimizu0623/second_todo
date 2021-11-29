@@ -10,17 +10,20 @@ const App =()=>{
     // const [completedList, setCompletedList] = useState([{name:'pppp'}]);
     const [detail, setDetail] = useState();
     const [edit, setEdit] = useState();
-
+    
     const onChangeInputText = (event) => setInputTodo({...inputTodo, name: event.target.value})
-
-    // const onChangeInputTextarea = (event) => setInputTextarea(event.target.value)
+    const onChangeDate = (event) => setInputTodo({...inputTodo, date:event.target.value}) 
+    const onChangeInputTextarea = (event) => setInputTodo({...inputTodo, memo:event.target.value})
+    
+    // const onChangeEditDate = (event) => setEdit({...inputTodo, date:event.target.value})
+    // const onChangeEditTodo = (event) => setEdit({...inputTodo, name:event.target.value})
+    // const onChangeEditInputTextarea = (event) => setEdit({...inputTodo, memo:event.target.value})
+    
     
     const onClickCreate = () => {
         if(!inputTodo.name) {
             return;
         }
-        
-        console.log(inputTodo)
         const newTodos = [...todoList, inputTodo];
         // const countUpId = () => {
         //     setTodoList(todoList.id + 1)
@@ -40,6 +43,17 @@ const App =()=>{
         // setTodoList(textEdit)
         // setInputText(inputText)
     // }
+
+
+    
+    // const statusFilter= () => {
+    //     const status = 
+    // }
+
+
+
+
+
     
     const onClickDelete = (index) => {
         const newTodos = [...todoList]
@@ -48,28 +62,15 @@ const App =()=>{
     }
     
     
-    const onChangeDate = (event) => setInputTodo({...inputTodo, date:event.target.value})
-    
-    const onChangeInputTextarea = (event) => setInputTodo({...inputTodo, memo:event.target.value})
-
-
-
-    const onChangeEditDate = (event) => setEdit({...inputTodo, date:event.target.value})
-    const onChangeEditTodo = (event) => setEdit({...inputTodo, name:event.target.value})
-    const onChangeEditInputTextarea = (event) => setEdit({...inputTodo, memo:event.target.value})
-    
-
-
 
     const onClickNewTodo = () => {
-        console.log(todoList)
         // ↓const ids = todoList.map((todo) => { 
             //     return todo.id
             //   })
         const ids = todoList.map(todo => todo.id)
         const id = ids.length === 0 ? 1 : Math.max(...ids) + 1
         setInputTodo({id})
-    }
+    }    
     // {
         //     // ↓一番大きい数字に１足していく処理を考える
         //     // const id = () => setInputTodo({...inputTodo.id})
@@ -98,19 +99,56 @@ const App =()=>{
                 setDetail(null)
             }
             
-            
             const onClickClose = () => {
                 setDetail(null)
                 setInputTodo(null)
             }
 
-            const onClickSave = () => {
-                console.log('save')
 
-                // const newTodos = [...todoList, inputTodo];
-                // setTodoList(newTodos);
-                // setEdit(null)   
+
+
+
+            const onClickSave = () => {
+                if(edit.name === "") {
+                    return;
+                }
+                edit.map()
+                console.log('save')
+                console.log(edit)
+                console.log(edit.date)
+                console.log(edit.name)
+                console.log(edit.memo)
+
+                // const editTodos = () => {
+                //     if (todoList !== edit){
+                //         setTodoList([edit])
+                //     }
+                // }
+
+                // const editTodos = [...todoList, edit];
+                setTodoList(edit)
+                // setTodoList(...todoList, edit)
+                setEdit(null)
             }
+
+
+
+
+            // const onClickCreate = () => {
+            //     if(!inputTodo.name) {
+            //         return;
+            //     }
+                
+            //     const newTodos = [...todoList, inputTodo];
+        
+            //     setTodoList(newTodos);
+            //     setInputTodo(null)
+                
+            // };
+
+
+
+
             
             const onClickCloseEdit = () => {
                 const confirmMessage = '編集は保存されませんがよろしいですか？'
@@ -132,10 +170,9 @@ const App =()=>{
          
          <div className="inputTodo">
              <button onClick={onClickNewTodo}>New Todo</button>
-             <select name="todoStatusSelect" id="todoStatusSelect" onChange="">
-                <option value="">-- Select --</option>
+             <select name="todoStatusSelect" id="todoStatusSelect">
+                <option value="All">All</option>
                 <option value="Todo">Todo</option>
-                <option value="In progress">In progress</option>
                 <option value="Done">Done</option>
              </select>
          </div>
@@ -161,7 +198,6 @@ const App =()=>{
                                 <td>
                                     <select name="todoStatus" id="todoStatus">
                                         <option value="Todo">Todo</option>
-                                        <option value="In progress">In progress</option>
                                         <option value="Done">Done</option>
                                     </select>
                                 </td>
@@ -257,7 +293,8 @@ const App =()=>{
                     </div>
                 </>
             )
-        }       
+        }    
+
 
 
         {
@@ -269,18 +306,18 @@ const App =()=>{
                     <div className="modalEdit">
                         <div>
                             <label for="date">Limit Date</label>
-                            <input type="date" value={edit.date} onChange={onChangeEditDate}/>
+                            <input type="date" value={edit.date} onChange={e=> setEdit({...inputTodo, date:e.target.value})}/>
                         </div>
                         <div>
                             <label for="todo">Todo</label>
-                            <input type="text" value={edit.name} onChange={onChangeEditTodo} placeholder="todoを入力" />
+                            <input type="text" value={edit.name} onChange={e=> setEdit({...inputTodo, name:e.target.value})} placeholder="todoを入力" />
                         </div>
                         <div>
                             <label for="memo">Memo</label>
                             <textarea
                              id="textbox"
                              value={edit.memo}
-                             onChange={onChangeEditInputTextarea}
+                             onChange={e => setEdit({...inputTodo, memo:e.target.value})}
                              placeholder="Write down the memo" />
                         </div>
                     </div>
