@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import './Style.css'
 import './img/picture.jpeg';
 
@@ -10,6 +10,7 @@ const App =()=>{
     // const [completedList, setCompletedList] = useState([{name:'pppp'}]);
     const [detail, setDetail] = useState();
     const [edit, setEdit] = useState();
+    const [selector, setSelector] = useState("All");
     
     const onChangeInputText = (event) => setInputTodo({...inputTodo, name: event.target.value})
     const onChangeDate = (event) => setInputTodo({...inputTodo, date:event.target.value}) 
@@ -20,148 +21,102 @@ const App =()=>{
     // const onChangeEditInputTextarea = (event) => setEdit({...inputTodo, memo:event.target.value})
     
     
+    const updateTodoList = (todo) => {
+        const newTodoList = todoList.map(item => {
+            if (item.id === todo.id) {
+              return todo
+            }
+            return item
+          })
+          setTodoList(newTodoList)
+    }
+    
+    const onClickNewTodo = () => {
+        // ↓const ids = todoList.map((todo) => { 
+            //     return todo.id
+            //   })
+        const ids = todoList.map(todo => todo.id)    
+        const id = ids.length === 0 ? 1 : Math.max(...ids) + 1
+        setInputTodo({id, status:"Todo"})
+    }        
+
     const onClickCreate = () => {
         if(!inputTodo.name) {
             return;
-        }
+        }    
         const newTodos = [...todoList, inputTodo];
         // const countUpId = () => {
-        //     setTodoList(todoList.id + 1)
+        //     setTodoList(todoList.id + 1)    
         // }
 
         setTodoList(newTodos);
         // countUpId(todoList)
         setInputTodo(null)
         
-    };
+    };    
 
-    // const onClickEdit = (index) => {
-        // const textEdit = [...todoList]
-        // textEdit.splice(index, 1)
-
-        // const inputText = [todoList[index]]
-        // setTodoList(textEdit)
-        // setInputText(inputText)
-    // }
-
-
-    
-    // const statusFilter= () => {
-    //     const status = 
-    // }
-
-
-
-
-
-    
     const onClickDelete = (index) => {
         const newTodos = [...todoList]
         newTodos.splice(index, 1)               
         setTodoList(newTodos)
-    }
-    
-    
-
-    const onClickNewTodo = () => {
-        // ↓const ids = todoList.map((todo) => { 
-            //     return todo.id
-            //   })
-        const ids = todoList.map(todo => todo.id)
-        const id = ids.length === 0 ? 1 : Math.max(...ids) + 1
-        setInputTodo({id})
     }    
-    // {
-        //     // ↓一番大きい数字に１足していく処理を考える
-        //     // const id = () => setInputTodo({...inputTodo.id})
-        //     // const maxNumber = () => Math.max.apply(null,...inputTodo.id)
-        //     // const id = maxNumber()
-        //     // const maxNumber = () => {Math.max(...inputTodo.id)}
-        
-        //     // console.log(Math.max(id))
-        // setTodoList();
-        
-        
-        //     // setInputTodo(Math.max(...inputTodo.id + 1))
-        
-        //     const id = () => {
-            //         Math.max({...todoList.id}) + 1
-            //     }
-            // console.log({id})
-            // }
-            
-            const onClickDetail = (todo) => {
-                setDetail(todo)
-            }
-
-            const onClickEdit = () => {
-                setEdit(detail)
-                setDetail(null)
-            }
-            
-            const onClickClose = () => {
-                setDetail(null)
-                setInputTodo(null)
-            }
-
-
-
-
-
-            const onClickSave = () => {
-                if(edit.name === "") {
-                    return;
-                }
-                edit.map()
-                console.log('save')
-                console.log(edit)
-                console.log(edit.date)
-                console.log(edit.name)
-                console.log(edit.memo)
-
-                // const editTodos = () => {
-                //     if (todoList !== edit){
-                //         setTodoList([edit])
-                //     }
-                // }
-
-                // const editTodos = [...todoList, edit];
-                setTodoList(edit)
-                // setTodoList(...todoList, edit)
-                setEdit(null)
-            }
-
-
-
-
-            // const onClickCreate = () => {
-            //     if(!inputTodo.name) {
-            //         return;
-            //     }
                 
-            //     const newTodos = [...todoList, inputTodo];
-        
-            //     setTodoList(newTodos);
-            //     setInputTodo(null)
-                
-            // };
+    const onClickDetail = (todo) => {
+        setDetail(todo)
+    }   
+
+    const onClickEdit = () => {
+        setEdit(detail)
+        setDetail(null)
+    }    
+    
+    const onClickClose = () => {
+        setDetail(null)
+        setInputTodo(null)
+    }   
+
+    const onClickSave = () => {
+        if(edit.name === "") {
+            return;
+        }    
+        updateTodoList(edit)
+        setEdit(null)
+    }   
+    
+    const onClickCloseEdit = () => {
+        const confirmMessage = '編集は保存されませんがよろしいですか？'
+        let result = window.confirm(confirmMessage);
+        if(result){
+            setEdit(null)
+            setInputTodo(null)
+        }else{
+            return;
+        }    
+    }   
+
+    const onChangeFilter = (event) => {
+        console.log(event.target.value)
+        setSelector(event.target.value)
+    }    
+    
+    
+    const onChangeTodoStatus = (event, todo) => {
+        todo.status = event.target.value
+        updateTodoList(todo)
+    }     
+
+    const filterStatus = todo => {
+        switch (selector) {
+            case 'All':
+              return true
+            case 'Todo':
+              return todo.status === 'Todo'
+            case 'Done':
+              return todo.status === 'Done'
+          }
+    }
 
 
-
-
-            
-            const onClickCloseEdit = () => {
-                const confirmMessage = '編集は保存されませんがよろしいですか？'
-                let result = window.confirm(confirmMessage);
-                if(result){
-                    setEdit(null)
-                    setInputTodo(null)
-                }else{
-                    return;
-                }
-            }
-
-            
             return(
                 <>
          <div className="inputTitle">
@@ -170,7 +125,7 @@ const App =()=>{
          
          <div className="inputTodo">
              <button onClick={onClickNewTodo}>New Todo</button>
-             <select name="todoStatusSelect" id="todoStatusSelect">
+             <select name="todoStatusSelect" id="todoStatusSelect" onChange={onChangeFilter}>
                 <option value="All">All</option>
                 <option value="Todo">Todo</option>
                 <option value="Done">Done</option>
@@ -190,13 +145,13 @@ const App =()=>{
                 </tr>
                 </thead>
                 <tbody>
-                    {todoList.map((todo, index) => {
+                    {todoList.filter(filterStatus).map((todo, index) => {
                         return (
                             <tr key={todo.id}>
                                 <td>{todo.id}</td>
                                 <td>{todo.date}</td>
                                 <td>
-                                    <select name="todoStatus" id="todoStatus">
+                                    <select value={todo.status} name="todoStatus" id="todoStatus" onChange={function(event) { onChangeTodoStatus(event, todo) }}>
                                         <option value="Todo">Todo</option>
                                         <option value="Done">Done</option>
                                     </select>
@@ -306,18 +261,18 @@ const App =()=>{
                     <div className="modalEdit">
                         <div>
                             <label for="date">Limit Date</label>
-                            <input type="date" value={edit.date} onChange={e=> setEdit({...inputTodo, date:e.target.value})}/>
+                            <input type="date" value={edit.date} onChange={e=> setEdit({...edit, date:e.target.value})}/>
                         </div>
                         <div>
                             <label for="todo">Todo</label>
-                            <input type="text" value={edit.name} onChange={e=> setEdit({...inputTodo, name:e.target.value})} placeholder="todoを入力" />
+                            <input type="text" value={edit.name} onChange={e=> setEdit({...edit, name:e.target.value})} placeholder="todoを入力" />
                         </div>
                         <div>
                             <label for="memo">Memo</label>
                             <textarea
                              id="textbox"
                              value={edit.memo}
-                             onChange={e => setEdit({...inputTodo, memo:e.target.value})}
+                             onChange={e => setEdit({...edit, memo:e.target.value})}
                              placeholder="Write down the memo" />
                         </div>
                     </div>
