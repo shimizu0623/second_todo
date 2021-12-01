@@ -15,16 +15,12 @@ const App =()=>{
     const onChangeInputText = (event) => setInputTodo({...inputTodo, name: event.target.value})
     const onChangeDate = (event) => setInputTodo({...inputTodo, date:event.target.value}) 
     const onChangeInputTextarea = (event) => setInputTodo({...inputTodo, memo:event.target.value})
-    
-    // const onChangeEditDate = (event) => setEdit({...inputTodo, date:event.target.value})
-    // const onChangeEditTodo = (event) => setEdit({...inputTodo, name:event.target.value})
-    // const onChangeEditInputTextarea = (event) => setEdit({...inputTodo, memo:event.target.value})
-    
+
     
     const updateTodoList = (todo) => {
         const newTodoList = todoList.map(item => {
             if (item.id === todo.id) {
-              return todo
+            return todo
             }
             return item
           })
@@ -35,54 +31,60 @@ const App =()=>{
         // ↓const ids = todoList.map((todo) => { 
             //     return todo.id
             //   })
-        const ids = todoList.map(todo => todo.id)    
-        const id = ids.length === 0 ? 1 : Math.max(...ids) + 1
-        setInputTodo({id, status:"Todo"})
-    }        
-
-    const onClickCreate = () => {
-        if(!inputTodo.name) {
-            return;
-        }    
-        const newTodos = [...todoList, inputTodo];
-        // const countUpId = () => {
-        //     setTodoList(todoList.id + 1)    
-        // }
-
-        setTodoList(newTodos);
-        // countUpId(todoList)
-        setInputTodo(null)
+            const ids = todoList.map(todo => todo.id)    
+            const id = ids.length === 0 ? 1 : Math.max(...ids) + 1
+            setInputTodo({id, status:"Todo"})
+        }        
         
-    };    
-
-    const onClickDelete = (index) => {
-        const newTodos = [...todoList]
-        newTodos.splice(index, 1)               
-        setTodoList(newTodos)
-    }    
+        const onClickCreate = () => {
+            if(!inputTodo.name) {
+                return;
+            }    
+            const newTodos = [...todoList, inputTodo];
+            // const countUpId = () => {
+                //     setTodoList(todoList.id + 1)    
+                // }
                 
-    const onClickDetail = (todo) => {
-        setDetail(todo)
-    }   
-
-    const onClickEdit = () => {
-        setEdit(detail)
-        setDetail(null)
-    }    
-    
-    const onClickClose = () => {
-        setDetail(null)
-        setInputTodo(null)
-    }   
-
-    const onClickSave = () => {
-        if(edit.name === "") {
-            return;
-        }    
-        updateTodoList(edit)
-        setEdit(null)
-    }   
-    
+                setTodoList(newTodos);
+                // countUpId(todoList)
+                setInputTodo(null)
+                
+            };    
+            
+            const onClickDelete = (index) => {
+                const confirmMessage = '削除してよろしいですか？'
+                let result = window.confirm(confirmMessage);
+                if(result){
+                    const newTodos = [...todoList]
+                    newTodos.splice(index, 1)               
+                    setTodoList(newTodos)
+                }else{
+                    return;
+                }    
+            }
+            
+            const onClickDetail = (todo) => {
+                setDetail(todo)
+            }   
+            
+            const onClickEdit = () => {
+                setEdit(detail)
+                setDetail(null)
+            }    
+            
+            const onClickClose = () => {
+                setDetail(null)
+                setInputTodo(null)
+            }   
+            
+            const onClickSave = () => {
+                if(edit.name === "") {
+                    return;
+                }    
+                updateTodoList(edit)
+                setEdit(null)
+            }   
+            
     const onClickCloseEdit = () => {
         const confirmMessage = '編集は保存されませんがよろしいですか？'
         let result = window.confirm(confirmMessage);
@@ -95,10 +97,8 @@ const App =()=>{
     }   
 
     const onChangeFilter = (event) => {
-        console.log(event.target.value)
         setSelector(event.target.value)
     }    
-    
     
     const onChangeTodoStatus = (event, todo) => {
         todo.status = event.target.value
