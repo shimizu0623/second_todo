@@ -1,16 +1,24 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import './Style.css'
 import './img/picture.jpeg';
 
 // localStorage.getItem('inputTodo') ? localStorage.getItem('inputTodo').split() : []
+// JSON.parse(localStorage.getItem('todoList'))
 
 const App =()=>{
+    const localStorageKey = 'todoList'
     const [inputTodo, setInputTodo] = useState()
-    const [todoList, setTodoList] = useState([]);
+    const [todoList, setTodoList] = useState(localStorage.getItem(localStorageKey) ? JSON.parse(localStorage.getItem(localStorageKey)) : []);
     // const [completedList, setCompletedList] = useState([{name:'pppp'}]);
     const [detail, setDetail] = useState();
     const [edit, setEdit] = useState();
     const [selector, setSelector] = useState("All");
+
+    useEffect(() => {
+        localStorage.setItem(localStorageKey, JSON.stringify(todoList))
+    }, [todoList]);
+
+    
     
     const onChangeInputText = (event) => setInputTodo({...inputTodo, name: event.target.value})
     const onChangeDate = (event) => setInputTodo({...inputTodo, date:event.target.value}) 
