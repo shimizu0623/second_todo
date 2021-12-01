@@ -113,6 +113,8 @@ const App =()=>{
               return todo.status === 'Todo'
             case 'Done':
               return todo.status === 'Done'
+            default :
+              return true
           }
     }
 
