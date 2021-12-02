@@ -108,10 +108,11 @@ const App =()=>{
         setSelector(event.target.value)
     }    
     
+
     const onChangeTodoStatus = (event, todo) => {
         todo.status = event.target.value
         updateTodoList(todo)
-    }     
+     }     
 
     const filterStatus = todo => {
         switch (selector) {
@@ -123,6 +124,7 @@ const App =()=>{
               return todo.status === 'Done'
             default :
               return true
+            //   ↑breakよりreturnが強いからbreakなくてok
           }
     }
 
