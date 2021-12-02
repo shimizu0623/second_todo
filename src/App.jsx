@@ -1,9 +1,8 @@
 import React, {useState, useEffect} from 'react';
+import {InputTodos} from './components/inputTodos';
+import {TodoLists} from './components/todoLists';
 import './Style.css'
 import './img/picture.jpeg';
-
-// localStorage.getItem('inputTodo') ? localStorage.getItem('inputTodo').split() : []
-// JSON.parse(localStorage.getItem('todoList'))
 
 const App =()=>{
     const localStorageKey = 'todoList'
@@ -124,63 +123,25 @@ const App =()=>{
               return todo.status === 'Done'
             default :
               return true
-            //   ↑breakよりreturnが強いからbreakなくてok
+            //   ↑breakよりreturnの方が強いからbreakなくてok
           }
     }
 
 
             return(
                 <>
-         <div className="inputTitle">
-            <h1>TO DO LIST</h1>
-         </div>
-         
-         <div className="inputTodo">
-             <button onClick={onClickNewTodo}>New Todo</button>
-             <select name="todoStatusSelect" id="todoStatusSelect" onChange={onChangeFilter}>
-                <option value="All">All</option>
-                <option value="Todo">Todo</option>
-                <option value="Done">Done</option>
-             </select>
-         </div>
-
-         <div className="todoList">
-            <p className="todoListTitle">Todo</p>
-            <table className="todoListsTable">
-                <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>LIMIT</th>
-                    <th>STATUS</th>
-                    <th>TODO</th>
-                    <th>DETAIL</th>
-                </tr>
-                </thead>
-                <tbody>
-                    {todoList.filter(filterStatus).map((todo, index) => {
-                        return (
-                            <tr key={todo.id}>
-                                <td>{todo.id}</td>
-                                <td>{todo.date}</td>
-                                <td>
-                                    <select value={todo.status} name="todoStatus" id="todoStatus" onChange={function(event) { onChangeTodoStatus(event, todo) }}>
-                                        <option value="Todo">Todo</option>
-                                        <option value="Done">Done</option>
-                                    </select>
-                                </td>
-                                <td>
-                                    <p>{todo.name}</p>
-                                </td>
-                                <td>
-                                    <button onClick={() => onClickDelete(index)}>delete</button>
-                                    <button onClick={() => onClickDetail(todo)}>Check the details</button>
-                                </td>
-                            </tr>
-                        )
-                    })}
-                </tbody>
-            </table>
-         </div>
+                
+                <InputTodos
+                    onClick={onClickNewTodo} 
+                    onChange={onChangeFilter}
+                />
+                <TodoLists
+                    todo={todoList}
+                    onClickDelete={onClickDelete} 
+                    onClickDetail={onClickDetail} 
+                    onChange={onChangeTodoStatus} 
+                    filter={filterStatus}
+                />
 
 
         {
@@ -321,23 +282,6 @@ const App =()=>{
                    )
                 })}
             </div> */}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
