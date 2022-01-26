@@ -4,7 +4,6 @@ export const TodoLists = (props) => {
     const {todo, onClickDelete, onClickDetail, onChange, filter} = props;
     return(
     <div className="todoList">
-        <p className="todoListTitle">Todo</p>
         <table className="todoListsTable">
             <thead>
             <tr>
